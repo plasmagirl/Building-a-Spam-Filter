@@ -71,10 +71,12 @@ $\alpha$ is an additive smoothing parameter to compensate for edge cases (i.e. w
 
 To decide between two labels/classes, e.g., $Y_1, Y_2$, all we need to do is caluculate the posterior probabilities for each class (denominator is the same for both and can be ignored) -  
 
-$$
-\Pr(Y_1|features) \propto \Pr(Y_1)\Pr(features|Y_1)\\
+\\begin{equation}
+\Pr(Y_1|features) \propto \Pr(Y_1)\Pr(features|Y_1)
+\\end{equation}
+\\begin{equation}
 \Pr(Y_2|features) \propto \Pr(Y_2)\Pr(features|Y_2)
-$$
+\\end{equation}
 
 If $\Pr(Y_1|features) > \Pr(Y_2|features)$ the sample is classified as $Y_1$ else $Y_2$. If both probabilities are equal, then the model cannot asign a class and will require the assistance of the subject matter expert.
 
