@@ -55,8 +55,11 @@ A good example to consider would be HIV testing. The probability that a given pe
 
 In the broader context of classification, Bayes theorem can tell us the probability of a particular object belonging to a certain class ($Y$) given its observed feature values. 
 
+%%latex
 $$
+\begin{equation*}
 \Pr(Y|features)=\frac{\Pr(Y)\Pr(features|Y)}{\Pr(features)}
+\end{equation*}
 $$
 
 
