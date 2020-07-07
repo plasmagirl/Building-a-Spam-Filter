@@ -150,9 +150,7 @@ After caluclation all the probabilites, we wrote a function to classify new mess
 
 To calculate it's accuracy, we tested the model on the test dataset. The accuracy was calculated as -
 
-\\begin{equation}
-Accuracy = \frac{\text{number of correctly classified messages}}{\text{total number of messages}}
-\\end{equation}
+![equation](https://latex.codecogs.com/gif.latex?Accuracy%20%3D%20%5Cfrac%7B%5Ctext%7Bnumber%20of%20correctly%20classified%20messages%7D%7D%7B%5Ctext%7Btotal%20number%20of%20messages%7D%7D)
 
 The accuracy of our spam filter was 98.74%. Out of 1114 messages in the test dataset, the spam filter was able to correctly classify 1110 messgaes. This accuracy is much better than our goal of 80%. 
 
