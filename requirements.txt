@@ -1,0 +1,15 @@
+name: base
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - conda
+  - python=3.7
+  - python.app
+  - matplotlib
+  - scikit-learn
+  - pandas
+  - numpy
+  - jupyterlab
+prefix: /Users/neha/opt/miniconda3
+
