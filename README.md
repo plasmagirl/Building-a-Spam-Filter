@@ -43,45 +43,31 @@ To start, we randomize and split the dataframe into a training and test set. The
 
 Naive Bayes is a powerful algorithm for supervised pattern classification. It is based on Bayesian classification theory with the "*naive*" assumption that the features in the dataset are mutually independent (i.e., the occurence of one does not change the probability of the other). Given two events Y & X, Bayes theorem calculates conditional probability as - 
 
-$$
-\Pr(Y|X)=\frac{\Pr(X|Y)\Pr(Y)}{\Pr(X)}
-$$
+![equation](https://latex.codecogs.com/gif.latex?%5CPr%28Y%7CX%29%3D%5Cfrac%7B%5CPr%28X%7CY%29%5CPr%28Y%29%7D%7B%5CPr%28X%29%7D)
 
-- $\Pr(Y|X)$ is the probability of Y to occur if X already occured, also known as the posterior probability
-- $\Pr(Y), \Pr(X)$ - probability of Y, X to occur, also known as prior probability
-- $\Pr(X|Y)$ - probability of X to occur given Y 
+- Pr(Y|X) is the probability of Y to occur if X already occured, also known as the posterior probability
+- Pr(Y), Pr(X) - probability of Y, X to occur, also known as prior probability
+- Pr(X|Y) - probability of X to occur given Y 
 
-A good example to consider would be HIV testing. The probability that a given person has HIV ($\Pr(HIV^+)$) is the prior (before testing) probability. Whereas, the probability that a person has HIV after testing positive ($\Pr(HIV^+|T^+)$)  is the posterior probability (after testing). In an ideal world, diagnostics test would be 100% reliable and the $\Pr(HIV^+|T^+)$ would always be 1. But, in real life there is a small chance (testing error, human error etc.) that you don't have HIV even though you test positive. This is known as a *false* positive. 
+A good example to consider would be HIV testing. The probability that a given person has HIV (Pr(HIV<sup>+</sup>)) is the prior (before testing) probability. Whereas, the probability that a person has HIV after testing positive (Pr(HIV<sup>+</sup>|T<sup>+</sup>))  is the posterior probability (after testing). In an ideal world, diagnostics test would be 100% reliable and the Pr(HIV<sup>+</sup>|T<sup>+</sup>) would always be 1. But, in real life there is a small chance (testing error, human error etc.) that you don't have HIV even though you test positive. This is known as a *false* positive. 
 
-In the broader context of classification, Bayes theorem can tell us the probability of a particular object belonging to a certain class ($Y$) given its observed feature values. 
+In the broader context of classification, Bayes theorem can tell us the probability of a particular object belonging to a certain class (Y) given its observed feature values. 
 
-%%latex
-$$
-\begin{equation*}
-\Pr(Y|features)=\frac{\Pr(Y)\Pr(features|Y)}{\Pr(features)}
-\end{equation*}
-$$
+![equation](https://latex.codecogs.com/gif.latex?%5CPr%28Y%7Cfeatures%29%3D%5Cfrac%7B%5CPr%28Y%29%5CPr%28features%7CY%29%7D%7B%5CPr%28features%29%7D)
 
+Training the bayesian model requires calculating Pr(features|Y<sub>i</sub>) for each label. For a dataset with a large number of features, this would be a time consuming calculation. However, under the assumption of independence, these class conditional probabilities can be estimated from the training data by calclulating the frequency of occurance of the feature f<sub>d</sub> in class Y<sub>i</sub> - 
 
-Training the bayesian model requires calculating $\Pr(features|Y_i)$ for each label. For a dataset with a large number of features, this would be a time consuming calculation. However, under the assumption of independence, these class conditional probabilities can be estimated from the training data by calclulating the frequency of occurance of the feature $f_d$ in class $Y_i$ - 
+![equation](https://latex.codecogs.com/gif.latex?%5CPr%28features%7CY_i%29%20%3D%20%5CPr%28f_1%7CY_i%29*%20%5CPr%28f_2%7CY_i%29*%20.....%20%5CPr%28f_n%7CY_i%29%20%3D%20%5Cprod_%7Bd%3D1%7D%5E%7Bn%7D%20%5CPr%28f%7CY_i%29)
 
-$$
-\Pr(features|Y_i) = \Pr(f_1, f_2.....f_n|Y_i) = \Pr(f_1|Y_i)* \Pr(f_2|Y_i)* ..... \Pr(f_n|Y_i) = \prod_{d=1}^{n} \Pr(f|Y_i) \\
-\Pr(f_d|Y_i) = \frac{\text{number of times feature $f_d$ appears in class $Y_i$ + $\alpha$}}{\text{total count of all features in class $Y_i$ + $\alpha N$}}
-$$
+![equation](https://latex.codecogs.com/gif.latex?%5CPr%28f_d%7CY_i%29%20%3D%20%5Cfrac%7B%5Ctext%7Bnumber%20of%20times%20feature%20%24f_d%24%20appears%20in%20class%20%24Y_i%24%20&plus;%20%24%5Calpha%24%7D%7D%7B%5Ctext%7Btotal%20count%20of%20all%20features%20in%20class%20%24Y_i%24%20&plus;%20%24%5Calpha%20N%24%7D%7D)
 
-$\alpha$ is an additive smoothing parameter to compensate for edge cases (i.e. where $\Pr = 0$) and N is the total number of features.
+$\alpha$ is an additive smoothing parameter to compensate for edge cases (i.e. where Pr = 0) and N is the total number of features.
 
-To decide between two labels/classes, e.g., $Y_1, Y_2$, all we need to do is caluculate the posterior probabilities for each class (denominator is the same for both and can be ignored) -  
+To decide between two labels/classes, e.g., Y<sub>1</sub>, Y<sub>2</sub>, all we need to do is caluculate the posterior probabilities for each class (denominator is the same for both and can be ignored) -  
 
-\\begin{equation}
-\Pr(Y_1|features) \propto \Pr(Y_1)\Pr(features|Y_1)
-\\end{equation}
-\\begin{equation}
-\Pr(Y_2|features) \propto \Pr(Y_2)\Pr(features|Y_2)
-\\end{equation}
+![equation](https://latex.codecogs.com/gif.latex?%5CPr%28Y_1%7Cfeatures%29%20%5Cpropto%20%5CPr%28Y_1%29%5CPr%28features%7CY_1%29%5C%5C%20%5CPr%28Y_2%7Cfeatures%29%20%5Cpropto%20%5CPr%28Y_2%29%5CPr%28features%7CY_2%29)
 
-If $\Pr(Y_1|features) > \Pr(Y_2|features)$ the sample is classified as $Y_1$ else $Y_2$. If both probabilities are equal, then the model cannot asign a class and will require the assistance of the subject matter expert.
+If Pr(Y<sub>1</sub>|features) > Pr(Y<sub>2</sub>|features) the sample is classified as Y<sub>1</sub> else Y<sub>2</sub>. If both probabilities are equal, then the model cannot asign a class and will require the assistance of the subject matter expert.
 
 
 
@@ -120,36 +106,27 @@ To do this, we removed all punctuations from the text messages and converted all
 
 To be able to classify new messages, Naive Bayes theorem was used to answer the following probability equations - 
 
-$$
-\Pr(Spam|w_1,w_2,...w_n) \propto \Pr(Spam)\prod_{d=1}^{n}\Pr(w_d|Spam)\\
-\Pr(Ham|w_1,w_2,...w_n) \propto \Pr(Ham)\prod_{d=1}^{n}\Pr(w_d|Ham)
-$$
+![equation](https://latex.codecogs.com/gif.latex?%5CPr%28Spam%7Cw_1%2Cw_2%2C...w_n%29%20%5Cpropto%20%5CPr%28Spam%29%5Cprod_%7Bd%3D1%7D%5E%7Bn%7D%5CPr%28w_d%7CSpam%29%5C%5C%20%5CPr%28Ham%7Cw_1%2Cw_2%2C...w_n%29%20%5Cpropto%20%5CPr%28Ham%29%5Cprod_%7Bd%3D1%7D%5E%7Bn%7D%5CPr%28w_d%7CHam%29)
 
 where - 
 
-$$
-\Pr(Spam) = \frac{\text{length(spam messages)}}{\text{length(training dataset)}}\\
-\Pr(Ham) = \frac{\text{length(ham messages)}}{\text{length(training dataset)}}\\
-$$
+![equation](https://latex.codecogs.com/gif.latex?%5CPr%28Spam%29%20%3D%20%5Cfrac%7B%5Ctext%7Blength%28spam%20messages%29%7D%7D%7B%5Ctext%7Blength%28training%20dataset%29%7D%7D%5C%5C%20%5CPr%28Ham%29%20%3D%20%5Cfrac%7B%5Ctext%7Blength%28ham%20messages%29%7D%7D%7B%5Ctext%7Blength%28training%20dataset%29%7D%7D%5C%5C)
 
 and
 
-$$
-\Pr(w_d|Spam) = \frac{N_{{w_d}|Spam} + \alpha}{N_{spam} + \alpha N_{vocabulary}}\\
-\Pr(w_d|Ham) = \frac{N_{{w_d}|Ham} + \alpha}{N_{ham} + \alpha N_{vocabulary}}
-$$
+![equation](https://latex.codecogs.com/gif.latex?%5CPr%28w_d%7CSpam%29%20%3D%20%5Cfrac%7BN_%7B%7Bw_d%7D%7CSpam%7D%20&plus;%20%5Calpha%7D%7BN_%7Bspam%7D%20&plus;%20%5Calpha%20N_%7Bvocabulary%7D%7D%5C%5C%20%5CPr%28w_d%7CHam%29%20%3D%20%5Cfrac%7BN_%7B%7Bw_d%7D%7CHam%7D%20&plus;%20%5Calpha%7D%7BN_%7Bham%7D%20&plus;%20%5Calpha%20N_%7Bvocabulary%7D%7D)
 
-Here $N_{{w_d}|Spam}$ and $N_{{w_d}|Ham}$ is the number of times the word $w_d$ appears in the spam or ham messages, $N_{spam}$ and $N_{ham}$ are the number of words in spam and ham messages, $N_{vocabulary}$ is the number of words in the vocabulary and $\alpha = 1$ is the laplace smoothing parameter.
+Here ![equation](https://latex.codecogs.com/gif.latex?%5Cinline%20N_%7B%7Bw_d%7D%7CSpam%7D) and ![equation](https://latex.codecogs.com/gif.latex?%5Cinline%20N_%7B%7Bw_d%7D%7CHam%7D) is the number of times the word w<sub>d</sub> appears in the spam or ham messages, N<sub>spam</sub> and N<sub>ham</sub> are the number of words in spam and ham messages, N<sub>vocabulary</sub> is the number of words in the vocabulary and $\alpha$ = 1 is the laplace smoothing parameter.
 
 ## Classify new messages
 
 After caluclation all the probabilites, we wrote a function to classify new messages as spam or ham. The function - 
 - Takes as input a new message.
-- Calculates the probabilities $\Pr(spam|w_d)$ and $\Pr(ham|w_d)$ where $w_d$ are the words in the messages
+- Calculates the probabilities Pr(spam|w_d) and Pr(ham|w_d) where w<sub>d</sub> are the words in the messages
 - Classify the messages as -
-    - Spam if $\Pr(spam|w_d) > \Pr(ham|w_d)$
-    - Ham if $\Pr(spam|w_d) < \Pr(ham|w_d)$
-- The function will request human help if $\Pr(spam|w_d) = \Pr(ham|w_d)$
+    - Spam if Pr(spam|w_d) > Pr(ham|w_d)
+    - Ham if Pr(spam|w_d) < Pr(ham|w_d)
+- The function will request human help if Pr(spam|w_d) = Pr(ham|w_d)
 
 ### Accuracy
 
