@@ -122,11 +122,11 @@ Here ![equation](https://latex.codecogs.com/gif.latex?%5Cinline%20N_%7B%7Bw_d%7D
 
 After caluclation all the probabilites, we wrote a function to classify new messages as spam or ham. The function - 
 - Takes as input a new message.
-- Calculates the probabilities Pr(spam|w_d) and Pr(ham|w_d) where w<sub>d</sub> are the words in the messages
+- Calculates the probabilities Pr(spam|w<sub>d</sub>) and Pr(ham|w<sub>d</sub>) where w<sub>d</sub> are the words in the messages
 - Classify the messages as -
-    - Spam if Pr(spam|w_d) > Pr(ham|w_d)
-    - Ham if Pr(spam|w_d) < Pr(ham|w_d)
-- The function will request human help if Pr(spam|w_d) = Pr(ham|w_d)
+    - Spam if Pr(spam|w<sub>d</sub>) > Pr(ham|w<sub>d</sub>)
+    - Ham if Pr(spam|w<sub>d</sub>) < Pr(ham|w<sub>d</sub>)
+- The function will request human help if Pr(spam|w<sub>d</sub>) = Pr(ham|w<sub>d</sub>)
 
 ### Accuracy
 
